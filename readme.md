@@ -40,3 +40,7 @@ node init.js
 npm start
 ```
 
+## Postman
+
+- [Postman published Docs](https://documenter.getpostman.com/view/1747137/TVzRGy4s)
+
