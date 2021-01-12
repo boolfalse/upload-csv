@@ -27,11 +27,15 @@ npm i
 
 - Run migrations
 ```
+# if need
+sequelize db:migrate:undo:all
+# create tables
 sequelize db:migrate
 ```
 
 - Run this command to generate CSV sample file
 ```
+# fill the CSV content
 node init.js
 ```
 

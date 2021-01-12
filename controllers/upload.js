@@ -19,37 +19,38 @@ module.exports = {
                 });
             } else {
                 let data = {};
-                fileText.toString().split("\n").forEach((line, index, arr) => {
+                fileText.toString().split("\n").map(async (line, index, arr) => {
                     if (index > 0) {
-                        if (index > 10) {
-                            return 10;
+                        data = isValid(line);
+                        if(data.success) {
+                            await Success.create({
+                                line: index + 1,
+                                first_name: data.first_name,
+                                last_name: data.last_name,
+                                email: data.email,
+                                phone: data.phone,
+                            });
                         } else {
-                            data = isValid(line);
-                            if(data.success) {
-                                Success.create({
-                                    line: index + 1,
-                                    first_name: data.first_name,
-                                    last_name: data.last_name,
-                                    email: data.email,
-                                    phone: data.phone,
-                                });
-                            } else {
-                                Fail.create({
-                                    line: index + 1,
-                                    first_name: data.first_name,
-                                    last_name: data.last_name,
-                                    email: data.email,
-                                    phone: data.phone,
-                                    err_message: data.err_message,
-                                });
-                            }
+                            await Fail.create({
+                                line: index + 1,
+                                first_name: data.first_name,
+                                last_name: data.last_name,
+                                email: data.email,
+                                phone: data.phone,
+                                err_message: data.err_message,
+                            });
                         }
                     }
                 });
 
+                const successCount = await Success.count();
+                const failCount = await Fail.count();
+
                 return res.status(200).json({
                     success: true,
                     message: "Uploaded CSV file scanned successfully.",
+                    success_count: successCount,
+                    fail_count: failCount,
                 });
             }
         });
