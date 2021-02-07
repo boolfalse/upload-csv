@@ -4,6 +4,10 @@ const faker = require('faker');
 const path = require('path');
 const fs = require('fs');
 
+const envConfigs =  require('./config/environment');
+const env = process.env.NODE_ENV || 'development';
+const config = envConfigs[env];
+
 (async () => {
     const logFilePath = path.join(__dirname, './public/custom-csv.csv');
 
@@ -13,7 +17,7 @@ const fs = require('fs');
     let last_name_random = 0;
     let email_random = 0;
     let phone_random = 0;
-    while(i < 100) // initial CSV file rows count
+    while(i < config.csv_rows_count)
     {
         first_name_random = Math.floor(Math.random() * 100) + 1;
         last_name_random = Math.floor(Math.random() * 100) + 1;

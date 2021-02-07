@@ -6,6 +6,10 @@ const express = require('express');
 const helmet = require('helmet');
 const app = express();
 
+const envConfigs =  require('./config/environment');
+const env = process.env.NODE_ENV || 'development';
+const config = envConfigs[env];
+
 app.use(helmet());
 if(process.env.NODE_ENV === 'development') {
     const morgan = require('morgan')('dev');
@@ -14,7 +18,7 @@ if(process.env.NODE_ENV === 'development') {
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: config.upload_limit + 'mb'}));
 
 app.use('/api/upload', require('./routes/upload'));
 

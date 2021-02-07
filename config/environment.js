@@ -10,6 +10,8 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     logging: false,
+    csv_rows_count: 100000,
+    upload_limit: 128, // MB
   },
   production: {
     url: process.env.DATABASE_URL,
@@ -19,5 +21,7 @@ module.exports = {
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
     logging: false,
+    csv_rows_count: 100000,
+    upload_limit: 128, // MB
   },
 };
